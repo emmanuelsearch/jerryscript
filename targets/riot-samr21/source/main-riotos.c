@@ -20,45 +20,28 @@
 /**
  * Jerryscript simple test
  */
-int run_js (char * scr)
-{
-const jerry_char_t script[]="print (hi);";
-int i = strlen(scr); i++;
-  size_t script_size = strlen ((const char *) script);
-  bool ret_value = jerry_run_simple (script, script_size, JERRY_INIT_EMPTY);
-
-  return (ret_value ? 1 : 0);
-}
-
-int default_script (int argc, char **argv)
-{
- (void) argc;
- (void) argv;
- char c[]="123";
-  return (run_js(c));
-}
-
-
 int shell_script (int argc, char **argv)
 {
     if (argc < 2) {
-        puts("Usage: script <your script here>");
+        puts("Usage: script <your script here>\n\nTry for instance: script print('Hello World';)");
         return -1;
     }
  int count = argc-1;
- char script1[SHELL_DEFAULT_BUFSIZE+1]; 
- strcpy(script1,argv[1]);
+ jerry_char_t  script[2*SHELL_DEFAULT_BUFSIZE+1]; 
+ strcpy((char *) script,argv[1]);
  while (count>1) {
      count--;
-     strcat(script1," ");
-     strcat(script1,argv[argc-count]);
+     strcat((char *)script," ");
+     strcat((char *) script,argv[argc-count]);
    }
- printf ("Getting script: [%s] of size %u\n\n", script1, strlen (script1)); 
-  return (run_js(script1));
+ size_t script_size = strlen ((char *) script); 
+ printf ("Executing script: [%s]\n\n", script); 
+ bool ret_value = jerry_run_simple (script, script_size, JERRY_INIT_EMPTY);
+
+  return (ret_value ? 1 : 0);
 } /* test_jerry */
 
 const shell_command_t shell_commands[] = {
-  { "test", "Default script ", default_script },
   { "script", "Shell scripting ", shell_script },
   { NULL, NULL, NULL }
 };
@@ -69,8 +52,8 @@ int main (void)
   printf ("This board features a(n) %s MCU.\n", RIOT_MCU);
 
   /* start the shell */
-  char line_buf[SHELL_DEFAULT_BUFSIZE];
-  shell_run (shell_commands, line_buf, SHELL_DEFAULT_BUFSIZE);
+  char line_buf[2*SHELL_DEFAULT_BUFSIZE];
+  shell_run (shell_commands, line_buf, 2*SHELL_DEFAULT_BUFSIZE);
 
   return 0;
 }

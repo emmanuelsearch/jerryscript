@@ -6,69 +6,66 @@ This folder contains files to run JerryScript on RIOT-OS with STM32F4-Discovery 
 
 #### 1. Preface
 
-1, Directory structure
+1, Assumptions/Prerequisites
 
-Assume `harmony` as the path to the projects to build.
-The folder tree related would look like this.
-
-```
-harmony
-  + jerryscript
-  |  + targets
-  |      + riot-stm32f4
-  + RIOT
-```
-
-2, Target board
-
-Assume [STM32F4-Discovery with BB](http://www.st.com/web/en/catalog/tools/FM116/SC959/SS1532/LN1199/PF255417)
-as the target board.
-
-#### 2. Prepare RIOT-OS
 
 Follow [this](https://www.riot-os.org/#download) page to get the RIOT-OS source.
 
 Follow the [Inroduction](https://github.com/RIOT-OS/RIOT/wiki/Introduction) wiki site and also check that you can flash the stm32f4-board.
 
+Assumption: RIOT is installed in the same directory as jerryscript, for example let's call it 'harmony', giving something like:
 
-#### 3. Build JerryScript for RIOT-OS
+```
+harmony
+  + jerryscript
+  |  + targets
+  |      + riot-samr21
+  + RIOT
+  |  + examples
+```
+
+2, Target board
+
+Assume ATMEL SAMR21 as the target board.
+
+
+
+#### 2. Build JerryScript for RIOT-OS
 
 ```
 # assume you are in harmony folder
 cd jerryscript
-make -f ./targets/riot-stm32f4/Makefile.riot
+make -f ./targets/riot-samr21/Makefile.riot
 ```
 
 This will generate the following libraries:
 ```
-/build/bin/release.riotstm32f4/librelease.jerry-core.a
-/build/bin/release.riotstm32f4/librelease.jerry-libm.lib.a
+librelease.jerry-core.a
+librelease.jerry-libm.lib.a
 ```
 
-This will copy one library files to `targets/riot-stm32f4/bin` folder:
+This will copy one library files to `targets/riot-samr21/bin` folder:
 ```
 libjerrycore.a
 ```
 
-This will create a hex file in the `targets/riot-stm32f4/bin` folder:
+This will create a hex file in the `targets/riot-samr21/bin` folder:
 ```
 riot_jerry.elf
 ```
 
-#### 4. Flashing
+#### 4. Flashing and Communicating with the Board
 
 ```
-make -f ./targets/riot-stm32f4/Makefile.riot flash
+make -f ./targets/riot-samr21/Makefile.riot flash
 ```
 
-For how to flash the image with other alternative way can be found here:
-[Alternative way to flash](https://github.com/RIOT-OS/RIOT/wiki/Board:-STM32F4discovery#alternative-way-to-flash)
 
 #### 5. Cleaning
 
 To clean the build result:
 ```
-make -f ./targets/riot-stm32f4/Makefile.riot clean
+make -f ./targets/riot-samr21/Makefile.riot clean
 ```
 
 
@@ -76,21 +73,17 @@ make -f ./targets/riot-stm32f4/Makefile.riot clean
 
 You may have to press `RESET` on the board after the flash.
 
-You can use `minicom` for terminal program, and if the prompt shows like this:
-```
-main(): This is RIOT! (Version: ****)
-                                     You are running RIOT on a(n) stm32f4discovery board.
-                                                                                         This board features a(n) stm32f4 MCU.
-```
-please set `Add Carriage Ret` option by `CTRL-A` > `Z` > `U` at the console, if you're using `minicom`.
+Connect to the board via terminal and Minicom (or equivalent) with settings baud 115200 parity 8N1 (for comfort activate echo and carraige return). 
+Set `Add Carriage Ret` option by `CTRL-A` > `Z` > `U` and then `E` at the console, if you're using `minicom`.
 
-
-Help will provide a list of commands:
+In the RIOT shell, `help` will provide a list of commands:
 ```
 > help
 ```
 
-The `test` command will run the test example, which contains the following script code:
+The `script` command will run the test script code that you input in the commant line.
 ```
-print ('Hello, World!');
+script print ('hello');
 ```
+
+Outside of the print command, you may have to replace single brackets ' with \'.
