@@ -17,9 +17,6 @@
 #include "shell.h"
 #include "jerryscript.h"
 
-/**
- * Jerryscript simple test
- */
 int shell_script (int argc, char **argv)
 {
     if (argc < 2) {
@@ -39,7 +36,7 @@ int shell_script (int argc, char **argv)
  bool ret_value = jerry_run_simple (script, script_size, JERRY_INIT_EMPTY);
 
   return (ret_value ? 1 : 0);
-} /* test_jerry */
+}
 
 const shell_command_t shell_commands[] = {
   { "script", "Shell scripting ", shell_script },

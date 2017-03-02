@@ -1,96 +1,97 @@
 ### About
 
-This folder contains files to run JerryScript on RIOT-OS with STM32F4-Discovery board.
+This folder contains files to run JerryScript with RIOT on IoT-Lab M3 board.
+More info [here](https://www.iot-lab.info) on the open access testbed IoT-lab and how get a free account for bare-metal access to thousands of IoT devices.
 
 ### How to build
 
 #### 1. Preface
 
-1, Directory structure
+1, Assumptions/Prerequisites
 
-Assume `harmony` as the path to the projects to build.
-The folder tree related would look like this.
-
-```
-harmony
-  + jerryscript
-  |  + targets
-  |      + riot-stm32f4
-  + RIOT
-```
-
-2, Target board
-
-Assume [STM32F4-Discovery with BB](http://www.st.com/web/en/catalog/tools/FM116/SC959/SS1532/LN1199/PF255417)
-as the target board.
-
-#### 2. Prepare RIOT-OS
 
 Follow [this](https://www.riot-os.org/#download) page to get the RIOT-OS source.
 
 Follow the [Inroduction](https://github.com/RIOT-OS/RIOT/wiki/Introduction) wiki site and also check that you can flash the stm32f4-board.
 
+Assumption: RIOT is installed in the same directory as jerryscript, for example let's call it 'harmony', giving something like:
 
-#### 3. Build JerryScript for RIOT-OS
+```
+harmony
+  + jerryscript
+  |  + targets
+  |      + riot-iotlab
+  + RIOT
+  |  + examples
+```
+
+2, Target board
+
+Assume IoT-Lab_M3 as the target board.
+
+
+
+#### 2. Build JerryScript for RIOT-OS
 
 ```
 # assume you are in harmony folder
 cd jerryscript
-make -f ./targets/riot-stm32f4/Makefile.riot
+make -f ./targets/riot-iotlab/Makefile.riot
 ```
 
 This will generate the following libraries:
 ```
-/build/bin/release.riotstm32f4/librelease.jerry-core.a
-/build/bin/release.riotstm32f4/librelease.jerry-libm.lib.a
+librelease.jerry-core.a
+librelease.jerry-libm.lib.a
 ```
 
-This will copy one library files to `targets/riot-stm32f4/bin` folder:
+This will copy one library files to `targets/riot-iotlab/bin` folder:
 ```
 libjerrycore.a
 ```
 
-This will create a hex file in the `targets/riot-stm32f4/bin` folder:
+This will create a hex file in the `targets/riot-iotlab/bin` folder:
 ```
 riot_jerry.elf
 ```
 
-#### 4. Flashing
+#### 4. Flashing and Communicating with the Board
 
 ```
-make -f ./targets/riot-stm32f4/Makefile.riot flash
+make -f ./targets/riot-iotlab/Makefile.riot flash
 ```
 
-For how to flash the image with other alternative way can be found here:
-[Alternative way to flash](https://github.com/RIOT-OS/RIOT/wiki/Board:-STM32F4discovery#alternative-way-to-flash)
 
 #### 5. Cleaning
 
 To clean the build result:
 ```
-make -f ./targets/riot-stm32f4/Makefile.riot clean
+make -f ./targets/riot-samr21/Makefile.riot clean
 ```
 
 
-### 5. Running JerryScript Hello World! example
+### 5. Running the example
 
-You may have to press `RESET` on the board after the flash.
+1. compile RIOT .elf
 
-You can use `minicom` for terminal program, and if the prompt shows like this:
-```
-main(): This is RIOT! (Version: ****)
-                                     You are running RIOT on a(n) stm32f4discovery board.
-                                                                                         This board features a(n) stm32f4 MCU.
-```
-please set `Add Carriage Ret` option by `CTRL-A` > `Z` > `U` at the console, if you're using `minicom`.
+2. connect to the portal http://iot-lab.info
 
+3. through the portal, launch experiment (choosing nodes, and uploading .elf)
 
-Help will provide a list of commands:
+4. check the id of the nodes used for the experiment (for example: m3-102)
+
+5. ssh to frontend: ssh your-login@grenoble.iot-lab.info (if needed replace grenoble by other iot-lab site)
+
+5. once the experience in running (indicated on the web portal) open a serial connection on the node(s) with nc command (for example: nc m3-102 20000) then type reboot to get into the RIOT shell.
+
+In the RIOT shell, `help` will provide a list of commands:
 ```
 > help
 ```
 
-The `test` command will run the test example, which contains the following script code:
+The `script` command will run the test script code that you input in the commant line.
 ```
-print ('Hello, World!');
+script print ('hello');
 ```
+
+Outside of the print command, you may have to replace single brackets ' with \'.

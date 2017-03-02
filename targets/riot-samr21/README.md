@@ -1,6 +1,6 @@
 ### About
 
-This folder contains files to run JerryScript on RIOT-OS with STM32F4-Discovery board.
+This folder contains files to run JerryScript with RIOT on a SAMR21 board.
 
 ### How to build
 
@@ -30,7 +30,7 @@ Assume ATMEL SAMR21 as the target board.
 
 
 
-#### 2. Build JerryScript for RIOT-OS
+#### 2. Build JerryScript for RIOT
 
 ```
 # assume you are in harmony folder
@@ -69,7 +69,7 @@ make -f ./targets/riot-samr21/Makefile.riot clean
 ```
 
 
-### 5. Running JerryScript Hello World! example
+### 5. Running the JerryScript example
 
 You may have to press `RESET` on the board after the flash.
 
