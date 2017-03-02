@@ -80,10 +80,16 @@ In the RIOT shell, `help` will provide a list of commands:
 ```
 > help
 ```
-
 The `script` command will run the test script code that you input in the commant line.
+Some examples of scripts you can try:
 ```
 script print ('hello');
 ```
+```
+script var x = Math.sqrt (64); var txt = \'\'; while (x>1) { txt += --x + \'\\n\';} print (txt);
+```
+```
+script var person = { fname:\'John\', lname:\'Doe\', age:25 }; var text = \'\'; var x; for (x in person) { text += person[x] + \'\\n\'; } print (text);
+```
 
-Outside of the print command, you may have to replace single brackets ' with \'.
+Remark: outside of the print command, you may have to replace single brackets ' with \'.
