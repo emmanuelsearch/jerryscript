@@ -1,6 +1,6 @@
 ### About
 
-This folder contains files to run JerryScript with RIOT on IoT-Lab M3 board.
+This folder contains files to run JerryScript with RIOT on [IoT-Lab M3](https://www.iot-lab.info/hardware/m3/) board.
 More info [here](https://www.iot-lab.info) on the open access testbed IoT-lab and how get a free account for bare-metal access to thousands of IoT devices.
 
 ### How to build

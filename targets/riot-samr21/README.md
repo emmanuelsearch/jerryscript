@@ -1,6 +1,6 @@
 ### About
 
-This folder contains files to run JerryScript with RIOT on a SAMR21 board.
+This folder contains files to run JerryScript with RIOT on a [SAMR21](https://github.com/RIOT-OS/RIOT/wiki/Board:-Samr21-xpro) board.
 
 ### How to build
 

@@ -34,6 +34,9 @@ BINDIR ?= $(JERRYDIR)/targets/riot-samr21/bin/
 # development process:
 CFLAGS += -DDEVELHELP
 
+# Set stack size to seomthing big
+CFLAGS += -DTHREAD_STACKSIZE_MAIN=10092
+
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 

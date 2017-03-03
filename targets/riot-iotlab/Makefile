@@ -34,6 +34,9 @@ BINDIR ?= $(JERRYDIR)/targets/riot-iotlab/bin/
 # development process:
 CFLAGS += -DDEVELHELP
 
+# Set stack size to something big
+CFLAGS += -DTHREAD_STACKSIZE_MAIN=16384
+
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
