@@ -11,7 +11,7 @@ This folder contains files to run JerryScript with RIOT on a [SAMR21](https://gi
 
 Follow [this](https://www.riot-os.org/#download) page to get the RIOT-OS source.
 
-Follow the [Inroduction](https://github.com/RIOT-OS/RIOT/wiki/Introduction) wiki site and also check that you can flash the stm32f4-board.
+Follow the [Inroduction](https://github.com/RIOT-OS/RIOT/wiki/Introduction) wiki site and also check that you can flash the SAMR21 board.
 
 Assumption: RIOT is installed in the same directory as jerryscript, for example let's call it 'harmony', giving something like:
 
